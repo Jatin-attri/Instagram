@@ -151,6 +151,28 @@ app.get("/follows", async (req, res) => {
   }
 });
 
+app.post("/categories", async (req, res) => {
+  try {
+    const { name } = req.body;
+    const category = await prisma.category.create({
+      data: { name }
+    });
+    res.json(category);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ Get All Categories (GET)
+app.get("/categories", async (req, res) => {
+  try {
+    const categories = await prisma.category.findMany();
+    res.json(categories);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 /* ------------------ START SERVER ------------------ */
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);

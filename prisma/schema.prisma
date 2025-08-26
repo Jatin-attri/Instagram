@@ -75,7 +75,10 @@ model Follow {
   following   User   @relation("Followers", fields: [followingId], references: [id])
   followingId String @db.ObjectId
 }
-
+model Category{
+id String @id @default(auto()) @map("_id") @db.ObjectId
+name String @unique
+}
 enum Role {
   USER
   ADMIN
