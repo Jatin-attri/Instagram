@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <script>
+        async function register(e){
+            alert('form submited')
+            e.preventDefault();
+            const formdata = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("emailid").value,
+                role:document.getElementById("role").value
+            };
+          const res= await fetch("http://localhost:5000/user", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(formdata)
+});
+            const data = await res.json();
+            console.log(data);
+            
+        }
+    </script>
+
+</head>
+<body>
+    <form onsubmit="register(event)">
+        <label for="">Enter the User Name:</label>
+        <br>
+        <input type="text"  name="" id="name">
+        <br>
+        <br>
+        <label for="">Enter your Email id:</label>
+        <br>
+        <input type="email" name="" id="emailid">
+        <br>
+        <br>
+        <label for="role">Role:</label>
+    <select id="role" name="role" required>
+      <option value="USER">USER</option>
+      <option value="ADMIN">ADMIN</option>
+    </select><br /><br />
+        <button>Register</button>
+    </form>
+</body>
+</html>
