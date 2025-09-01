@@ -68,7 +68,7 @@ function Footer() {
         </div>
         
         <div className="footer-bottom">
-          <div className="footer-bottom-left">
+          <div className="footer-bottom-left fw-bold">
             <span>LinkedIn Corporation © 2025  (Designed by Jatin Attri with ♥)</span>
           </div>
           

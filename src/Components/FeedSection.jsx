@@ -25,7 +25,11 @@ function FeedSection() {
             
             <div className="profile-details">
               <div className="connections">
+                
+                <div className="invitation-header">
                 <h4>Connections</h4>
+                  <span className="count">21000+</span>
+                </div>
                 <p>Connect with alumni</p>
               </div>
               
@@ -71,7 +75,7 @@ function FeedSection() {
                 <span>Photo</span>
               </button>
               <button className="post-option">
-                <span className="icon video">🎬</span>
+                <span className="icon video ">🎬</span>
                 <span>Video</span>
               </button>
               <button className="post-option">
