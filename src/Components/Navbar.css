@@ -102,6 +102,12 @@
 .nav-item:hover {
   color: #000000;
 }
+.login:hover{
+  color: #0d0511;
+  
+  text-shadow: #000000;
+}
+
 
 .nav-item svg {
   width: 24px;

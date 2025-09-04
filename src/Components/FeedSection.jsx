@@ -1,7 +1,9 @@
 import React from 'react';
 import './FeedSection.css';
+import { getCurrentUser } from '../utils/auth';
 
 function FeedSection() {
+  const user = getCurrentUser();
   return (
     <div className="feed-section">
       <div className="feed-container">
@@ -17,7 +19,8 @@ function FeedSection() {
                     alt="Profile" 
                   />
                 </div>
-                <h2 className="profile-name">Jatin Attri</h2>
+                {user ? (
+                <h2 className="profile-name"> <span>👤 {user.name} ({user.email}) Roll:{user.role}</span></h2>) : (<span>Not logged in</span>) }
                 <p className="profile-title">MCA Student at CRSU | Full Stack Developer (React, Node.js...)</p>
                 <p className="profile-location">Jind, Hayana</p>
               </div>
