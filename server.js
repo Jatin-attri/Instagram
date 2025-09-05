@@ -3,14 +3,30 @@ import express from "express";
 import cors from 'cors';
 // import bodyParser from "body-parser";
 import { PrismaClient } from "@prisma/client";
+import multer from 'multer';
+import cloudinary from "cloudinary";
+
+import { v2 as cloudinaryV2 } from "cloudinary";
+
+
 
 const app = express();
 const prisma = new PrismaClient();
 const PORT = 5000;
 
 app.use(cors());
-app.use(express.json());
 
+
+
+cloudinaryV2.config({
+  cloud_name: "your-cloud-name",
+  api_key: "your-api-key",
+  api_secret: "your-api-secret",
+});
+
+
+const upload = multer({ dest: "uploads/" });
+app.use(express.json());
 // Middleware
 // app.use(bodyParser.json());
 
@@ -30,15 +46,30 @@ app.post("/user", async (req, res) => {
 });
 
 // ✅ Create a new post
-app.post("/post", async (req, res) => {
+app.post("/post", upload.single("image"), async (req, res) => {
   try {
-    const { title, authorId } = req.body;
-    const post = await prisma.post.create({
-      data: { title, authorId },
+    const { title, content, authorId } = req.body;
+
+    // Upload the image to Cloudinary if it exists
+    let imageUrl = null;
+    if (req.file) {
+      const uploadResult = await cloudinary.uploader.upload(req.file.path);
+      imageUrl = uploadResult.secure_url;
+    }
+
+    // Save the post to the database using Prisma
+    const newPost = await prisma.post.create({
+      data: {
+        title,
+        content,
+        imageUrl,
+        authorId,
+      },
     });
-    res.json(post);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+
+    res.json(newPost);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
